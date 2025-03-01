@@ -34,13 +34,10 @@ public class ServiceImplement implements CourseServiceInterface {
     }
 
     @Override
-    public String deleteById(Integer cid) {
+    public void deleteById(Integer cid) {
         if (courseRepo.existsById(cid)){
             courseRepo.deleteById(cid);
         }
-        else {
-            return "No records found";
-        }
-        return null;
+
     }
 }

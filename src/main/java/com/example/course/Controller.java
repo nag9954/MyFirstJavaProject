@@ -1,9 +1,6 @@
 package com.example.course;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +10,7 @@ public class Controller {
 
     @Autowired
     private ServiceImplement serviceImplement;
+
 
     @GetMapping("/test")
     public String test(){
@@ -31,27 +29,48 @@ public class Controller {
         return "post method";
     }
 
-    @GetMapping("/get/{cid}")
-    public ResponseEntity getCourse(@PathVariable Integer cid){
+    @GetMapping("/getCourse/{cid}")
+    public CourseResponse getCourse(@PathVariable Integer cid){
+        CourseResponse courseResponse = new CourseResponse();
         CourseEntity courseEntity = serviceImplement.getById(cid);
-        return new ResponseEntity<>(courseEntity,HttpStatus.OK);
+        if(courseEntity!=null){
+            courseResponse.setCourseEntity(courseEntity);
+        }else {
+            courseResponse.setResponse("No Record Found");
+        }
+
+        return courseResponse;
     }
 
     @GetMapping("/getall")
-    public ResponseEntity<List<CourseEntity>> getAll(){
+    public List<CourseEntity> getAll(){
         List<CourseEntity> allCourses = serviceImplement.getAllCourses();
-        return new ResponseEntity<>(allCourses,HttpStatus.OK);
+        return allCourses;
     }
 
-    @PutMapping("/put")
-    public ResponseEntity<String> updateCourse(@RequestBody CourseEntity courseEntity){
+    @PutMapping("/updateCourse")
+    public String updateCourse(@RequestBody CourseEntity courseEntity){
         String st = serviceImplement.upsert(courseEntity);
-        return new ResponseEntity<>(st,HttpStatus.OK);
+        return "String record Updated";
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteById(@PathVariable Integer cid){
-        String courseEntity = serviceImplement.deleteById(cid);
-        return new ResponseEntity<>(courseEntity,HttpStatus.OK);
+//    @DeleteMapping("/delete")
+//    public ResponseEntity<String> deleteById(@PathVariable Integer cid){
+//        String courseEntity = serviceImplement.deleteById(cid);
+//        return new ResponseEntity<>(courseEntity,HttpStatus.OK);
+//    }
+//    @DeleteMapping("/deletemap/{cid}")
+//    public String deleteById(@PathVariable Integer cid ){
+//        String status = serviceImplement.deleteById(cid);
+//        return "Deleted";
+//    }
+
+    @DeleteMapping("/Delete/{cid}")
+    public String deleteById(@PathVariable Integer cid){
+           serviceImplement.deleteById(cid);
+            return "Deleted";
     }
+
+
 }
+

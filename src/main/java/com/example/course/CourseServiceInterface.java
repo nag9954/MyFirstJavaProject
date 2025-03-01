@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface CourseServiceInterface {
 
-    public String upsert(CourseEntity course);
+    public abstract String upsert(CourseEntity course);
     public CourseEntity getById(Integer cid);
     public List<CourseEntity> getAllCourses();
-    public String deleteById(Integer cid);
+    public void deleteById(Integer cid);
 }
