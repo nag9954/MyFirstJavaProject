@@ -42,11 +42,7 @@ public class Controller {
         return courseResponse;
     }
 
-    @GetMapping("/getall")
-    public List<CourseEntity> getAll(){
-        List<CourseEntity> allCourses = serviceImplement.getAllCourses();
-        return allCourses;
-    }
+
 
     @PutMapping("/updateCourse")
     public String updateCourse(@RequestBody CourseEntity courseEntity){
@@ -69,6 +65,12 @@ public class Controller {
     public String deleteById(@PathVariable Integer cid){
            serviceImplement.deleteById(cid);
             return "Deleted the course id "+cid;
+    }
+
+    @GetMapping("/getAllData")
+    public List<CourseEntity> getAll(){
+        List<CourseEntity> all = serviceImplement.getAllCourses();
+        return all;
     }
 
 
