@@ -68,7 +68,7 @@ public class Controller {
     @DeleteMapping("/Delete/{cid}")
     public String deleteById(@PathVariable Integer cid){
            serviceImplement.deleteById(cid);
-            return "Deleted";
+            return "Deleted the course id "+cid;
     }
 
 
